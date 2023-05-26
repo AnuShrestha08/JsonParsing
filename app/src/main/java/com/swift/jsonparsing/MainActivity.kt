@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import com.swift.jsonparsing.retrofitclient.RetrofitInstance
+import com.swift.jsonparsing.retrofitclient.RetrofitInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,18 +18,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var rf = Retrofit.Builder()
-            .baseUrl(RetrofitInterface.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).build()
+//        var rf = Retrofit.Builder()
+//            .baseUrl(RetrofitInstance.BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create()).build()
 
-        var API = rf.create(RetrofitInterface::class.java)
+        var API = retrofit.create(RetrofitInterface::class.java)
         var call = API.posts
 
         var listview = findViewById<ListView>(R.id.listview)
         call?.enqueue(object:Callback<List<PostModel?>?>{
 
             override fun onFailure(call: Call<List<PostModel?>?>, t: Throwable) {
-                //Toast.makeText(this, "Failed",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Failed",Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(
